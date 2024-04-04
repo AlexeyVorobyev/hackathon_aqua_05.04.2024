@@ -1,0 +1,6 @@
+[submodule "repository/geoapify-nest-adapter"]
+	path = repository/geoapify-nest-adapter
+	url = git@github.com:AlexeyVorobyev/geoapify-nest-adapter.git
+[submodule "repository/search-image-nest-adapter"]
+	path = repository/search-image-nest-adapter
+	url = git@github.com:AlexeyVorobyev/search-image-nest-adapter.git

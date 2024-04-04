@@ -1,0 +1,101 @@
+version: "1.0"
+name: "hackathon-aqua-05-04-2024-microservices"
+services:
+  geoapify-nest-adapter-hackathon-aqua-05-04-2024:
+    container_name: geoapify-nest-adapter-hackathon-aqua-05-04-2024
+    hostname: geoapify-nest-adapter-hackathon-aqua-05-04-2024
+    build:
+      context: repository/geoapify-nest-adapter
+    env_file:
+      - path: repository/geoapify-nest-adapter/env/.env.prod
+        required: true
+    ports:
+      - ${GEOAPIFY_NEST_ADAPTER_EXTERNAL_PORT}:8081
+    networks:
+      dev-network-hackathon-aqua-05-04-2024:
+        ipv4_address: ${GEOAPIFY_NEST_ADAPTER_ADDRESS}
+
+  search-image-nest-adapter-hackathon-aqua-05-04-2024:
+    container_name: search-image-nest-adapter-hackathon-aqua-05-04-2024
+    hostname: search-image-nest-adapter-hackathon-aqua-05-04-2024
+    build:
+      context: repository/search-image-nest-adapter
+    env_file:
+      - path: repository/search-image-nest-adapter/env/.env.prod
+        required: true
+    ports:
+      - ${SEARCH_IMAGE_NEST_ADAPTER_EXTERNAL_PORT}:8081
+    networks:
+      dev-network-hackathon-aqua-05-04-2024:
+        ipv4_address: ${SEARCH_IMAGE_NEST_ADAPTER_ADDRESS}
+
+  postgres-hackathon-aqua-05-04-2024:
+    container_name: postgres-hackathon-aqua-05-04-2024
+    hostname: postgres-hackathon-aqua-05-04-2024
+    build:
+      dockerfile_inline: |
+        FROM library/postgres:15.2-alpine
+        COPY ./config/postgres/create-multiple-postgresql-databases.sh /docker-entrypoint-initdb.d/
+    restart: unless-stopped
+    ports:
+      - ${POSTGRES_EXTERNAL_PORT}:5432
+    environment:
+      # сработает только если нет волюма
+      POSTGRES_MULTIPLE_DATABASES: test1,test2,test3
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data:cached
+    networks:
+      dev-network-hackathon-aqua-05-04-2024:
+        ipv4_address: ${POSTGRES_ADDRESS}
+
+  postgres-admin-panel-hackathon-aqua-05-04-2024:
+    container_name: postgres-admin-panel-hackathon-aqua-05-04-2024
+    hostname: postgres-admin-panel-hackathon-aqua-05-04-2024
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres-hackathon-aqua-05-04-2024
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - ${POSTGRES_ADMIN_PANEL_EXTERNAL_PORT}:80
+    volumes:
+      - ./config/pgadmin/servers.json:/pgadmin4/servers.json # preconfigured servers/connections
+      - ./config/pgadmin/.pgpass:/.pgpass # passwords for the connections in this file
+    networks:
+      dev-network-hackathon-aqua-05-04-2024:
+        ipv4_address: ${POSTGRES_ADMIN_PANEL_ADDRESS}
+
+  nginx-reverse-proxy-hackathon-aqua-05-04-2024:
+    container_name: nginx-reverse-proxy-hackathon-aqua-05-04-2024
+    hostname: nginx-reverse-proxy-hackathon-aqua-05-04-2024
+    build:
+      context: config/nginx
+      no_cache: true
+    depends_on:
+      - geoapify-nest-adapter-hackathon-aqua-05-04-2024
+      - search-image-nest-adapter-hackathon-aqua-05-04-2024
+      - postgres-hackathon-aqua-05-04-2024
+      - postgres-admin-panel-hackathon-aqua-05-04-2024
+    environment:
+      GEOAPIFY_NEST_ADAPTER_ADDRESS: ${GEOAPIFY_NEST_ADAPTER_ADDRESS}
+      SEARCH_IMAGE_NEST_ADAPTER_ADDRESS: ${SEARCH_IMAGE_NEST_ADAPTER_ADDRESS}
+      POSTGRES_ADMIN_PANEL_ADDRESS: ${POSTGRES_ADMIN_PANEL_ADDRESS}
+    ports:
+      - ${NGINX_REVERSE_PROXY_EXTERNAL_PORT}:80
+    networks:
+      dev-network-hackathon-aqua-05-04-2024:
+        ipv4_address: ${NGINX_REVERSE_PROXY_ADDRESS}
+
+networks:
+  dev-network-hackathon-aqua-05-04-2024:
+    driver: bridge
+    external: true
+    ipam:
+      config:
+        - subnet: ${COMPOSE_SUBNET}
+          gateway: ${COMPOSE_GATEWAY}
