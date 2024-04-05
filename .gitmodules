@@ -4,3 +4,6 @@
 [submodule "repository/search-image-nest-adapter"]
 	path = repository/search-image-nest-adapter
 	url = git@github.com:AlexeyVorobyev/search-image-nest-adapter.git
+[submodule "repository/frontend-hackathon-aqua-05-04-2024"]
+	path = repository/frontend-hackathon-aqua-05-04-2024
+	url = git@github.com:AlexeyVorobyev/frontend-hackathon-aqua-05-04-2024.git
