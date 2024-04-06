@@ -70,6 +70,20 @@ services:
       dev-network-hackathon-aqua-05-04-2024:
         ipv4_address: ${POSTGRES_ADMIN_PANEL_ADDRESS}
 
+  frontend-hackathon-aqua-05-04-2024:
+    container_name: frontend-hackathon-aqua-05-04-2024
+    hostname: frontend-hackathon-aqua-05-04-2024
+    build:
+      context: repository/frontend-hackathon-aqua-05-04-2024
+    ports:
+      - ${FRONTEND_EXTERNAL_PORT}:3000
+    depends_on:
+      - geoapify-nest-adapter-hackathon-aqua-05-04-2024
+      - search-image-nest-adapter-hackathon-aqua-05-04-2024
+    networks:
+      dev-network-hackathon-aqua-05-04-2024:
+        ipv4_address: ${FRONTEND_ADDRESS}
+
   nginx-reverse-proxy-hackathon-aqua-05-04-2024:
     container_name: nginx-reverse-proxy-hackathon-aqua-05-04-2024
     hostname: nginx-reverse-proxy-hackathon-aqua-05-04-2024
@@ -81,10 +95,12 @@ services:
       - search-image-nest-adapter-hackathon-aqua-05-04-2024
       - postgres-hackathon-aqua-05-04-2024
       - postgres-admin-panel-hackathon-aqua-05-04-2024
+      - frontend-hackathon-aqua-05-04-2024
     environment:
       GEOAPIFY_NEST_ADAPTER_ADDRESS: ${GEOAPIFY_NEST_ADAPTER_ADDRESS}
       SEARCH_IMAGE_NEST_ADAPTER_ADDRESS: ${SEARCH_IMAGE_NEST_ADAPTER_ADDRESS}
       POSTGRES_ADMIN_PANEL_ADDRESS: ${POSTGRES_ADMIN_PANEL_ADDRESS}
+      FRONTEND_ADDRESS: ${FRONTEND_ADDRESS}
     ports:
       - ${NGINX_REVERSE_PROXY_EXTERNAL_PORT}:80
     networks:
