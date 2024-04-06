@@ -1,0 +1,653 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum ERole {
+  Admin
+  Moderator
+  User
+}
+
+enum ESortDirection {
+  ascending
+  descending
+}
+
+type Mutation {
+  auth: TAuthMutations!
+  externalRole: TExternalRoleMutations!
+  externalService: TExternalServiceMutations!
+  user: TUserMutations!
+}
+
+type Query {
+  auth: TAuthQueries!
+  externalRole: TExternalRoleQueries!
+  externalService: TExternalServiceQueries!
+  user: TUserQueries!
+}
+
+type TAuthMutations {
+  """Provides functionality of sign up to system"""
+  baseSignUp(input: TSignUpInput!): TTokenDataAttributes!
+
+  """
+  Provides functionality of sign up to particular external service in the system
+  """
+  externalServiceSignUp(input: TExternalServiceSignUpInput!): TTokenDataAttributes!
+
+  """sends email to user to make account verified"""
+  sendConfirmationEmail(input: TIdInput!): Boolean!
+
+  """sends email to you to verify"""
+  sendConfirmationEmailMe: Boolean!
+}
+
+type TAuthQueries {
+  """Provides functionality of refreshing tokens."""
+  refresh(input: TRefreshInput!): TTokenDataAttributes!
+
+  """Provides functionality of sign in to system."""
+  signIn(input: TSignInInput!): TTokenDataAttributes!
+}
+
+input TDatePeriodInput {
+  """End date"""
+  endDate: DateTime
+
+  """Start date"""
+  startDate: DateTime
+}
+
+type TExternalRoleAttributes {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Is role default"""
+  default: Boolean!
+
+  """Description of external role"""
+  description: String
+
+  """External service attributes"""
+  externalService: TExternalServiceAttributesOmitExternalRoles!
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Name of external role"""
+  name: String!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+
+  """Recognition key of external role"""
+  recognitionKey: String
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+}
+
+type TExternalRoleAttributesOmitExternalService {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Is role default"""
+  default: Boolean!
+
+  """Description of external role"""
+  description: String
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Name of external role"""
+  name: String!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+
+  """Recognition key of external role"""
+  recognitionKey: String
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+}
+
+type TExternalRoleAttributesOmitOperationMeta {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Is role default"""
+  default: Boolean!
+
+  """Description of external role"""
+  description: String
+
+  """External service attributes"""
+  externalService: TExternalServiceAttributesOmitExternalRoles!
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Name of external role"""
+  name: String!
+
+  """Recognition key of external role"""
+  recognitionKey: String
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+}
+
+input TExternalRoleCreateInput {
+  """Is role default"""
+  default: Boolean
+
+  """Description of external role"""
+  description: String
+
+  """Relation with external service"""
+  externalServiceId: UUID!
+
+  """Name of external role"""
+  name: String!
+
+  """Recognition key of external service"""
+  recognitionKey: String
+}
+
+type TExternalRoleListAttributes {
+  data: [TExternalRoleAttributesOmitOperationMeta!]!
+  meta: TListMetaAttributes!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+}
+
+input TExternalRoleListInput {
+  """Datetime period criteria"""
+  createDatePeriod: TDatePeriodInput
+
+  """Filter by entity id. Multiple criteria allowed with OR functionality"""
+  id: [UUID!]
+
+  """Page of list"""
+  page: Int = 0
+
+  """Amount of elements per page"""
+  perPage: Int = 8
+
+  """SimpleFilter"""
+  simpleFilter: String
+
+  """Sorting criteria"""
+  sort: [TSortInput!] = []
+
+  """Datetime period criteria"""
+  updateDatePeriod: TDatePeriodInput
+}
+
+type TExternalRoleMutations {
+  """Provides functionality of creating users evading sign-up system."""
+  create(input: TExternalRoleCreateInput!): TExternalRoleAttributes!
+
+  """Provides functionality of deleting external role by id."""
+  delete(input: TIdInput!): String!
+
+  """Provides functionality of editing external role by id."""
+  update(input: TExternalRoleUpdateInput!): TExternalRoleAttributes!
+}
+
+type TExternalRoleQueries {
+  """Provides functionality of getting list of users."""
+  list(input: TExternalRoleListInput): TExternalRoleListAttributes!
+
+  """Provides functionality of getting information about user by id."""
+  record(idInput: TIdInput!): TExternalRoleAttributes!
+}
+
+input TExternalRoleUpdateInput {
+  """Identification property with uuid signature"""
+  id: UUID!
+  payload: TExternalRoleUpdatePayloadInput!
+}
+
+input TExternalRoleUpdatePayloadInput {
+  """Is role default"""
+  default: Boolean
+
+  """Description of external role"""
+  description: String
+
+  """Relation with external service"""
+  externalServiceId: UUID
+
+  """Name of external role"""
+  name: String
+
+  """Recognition key of external role"""
+  recognitionKey: String
+}
+
+type TExternalServiceAttributes {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Description of external service"""
+  description: String
+
+  """External role attributes"""
+  externalRoles: [TExternalRoleAttributesOmitExternalService!]!
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Name of external service"""
+  name: String!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+
+  """Recognition key of external service"""
+  recognitionKey: String!
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+}
+
+type TExternalServiceAttributesOmitExternalRoles {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Description of external service"""
+  description: String
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Name of external service"""
+  name: String!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+
+  """Recognition key of external service"""
+  recognitionKey: String!
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+}
+
+type TExternalServiceAttributesOmitOperationMeta {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Description of external service"""
+  description: String
+
+  """External role attributes"""
+  externalRoles: [TExternalRoleAttributesOmitExternalService!]!
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Name of external service"""
+  name: String!
+
+  """Recognition key of external service"""
+  recognitionKey: String!
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+}
+
+input TExternalServiceCreateInput {
+  """Description of external service"""
+  description: String
+
+  """Name of external service"""
+  name: String!
+
+  """Recognition key of external service"""
+  recognitionKey: String
+}
+
+type TExternalServiceListAttributes {
+  data: [TExternalServiceAttributesOmitOperationMeta!]!
+  meta: TListMetaAttributes!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+}
+
+input TExternalServiceListInput {
+  """Datetime period criteria"""
+  createDatePeriod: TDatePeriodInput
+
+  """Filter by entity id. Multiple criteria allowed with OR functionality"""
+  id: [UUID!]
+
+  """Page of list"""
+  page: Int = 0
+
+  """Amount of elements per page"""
+  perPage: Int = 8
+
+  """SimpleFilter"""
+  simpleFilter: String
+
+  """Sorting criteria"""
+  sort: [TSortInput!] = []
+
+  """Datetime period criteria"""
+  updateDatePeriod: TDatePeriodInput
+}
+
+type TExternalServiceMutations {
+  """Provides functionality of creating external service."""
+  create(input: TExternalServiceCreateInput!): TExternalServiceAttributes!
+
+  """Provides functionality of deleting external service by id."""
+  delete(input: TIdInput!): String!
+
+  """Provides functionality of editing external service by id."""
+  update(input: TExternalServiceUpdateInput!): TExternalServiceAttributes!
+}
+
+type TExternalServiceQueries {
+  """Provides functionality of getting list of external services."""
+  list(input: TExternalServiceListInput): TExternalServiceListAttributes!
+
+  """
+  Provides functionality of getting information about external service by id.
+  """
+  record(idInput: TIdInput!): TExternalServiceAttributes!
+}
+
+input TExternalServiceSignUpInput {
+  """Special key to recognise external service"""
+  recognitionKey: String!
+}
+
+input TExternalServiceUpdateInput {
+  """Identification property with uuid signature"""
+  id: UUID!
+  payload: TExternalServiceUpdatePayloadInput!
+}
+
+input TExternalServiceUpdatePayloadInput {
+  """Description of external service"""
+  description: String
+
+  """Name of external service"""
+  name: String
+
+  """Recognition key of external service"""
+  recognitionKey: String
+}
+
+input TIdInput {
+  """Identification property with uuid signature"""
+  id: UUID!
+}
+
+type TListMetaAttributes {
+  """Current page"""
+  currentPage: Int!
+
+  """Elements per page"""
+  elementsPerPage: Int!
+
+  """Total amount of elements in list"""
+  totalElements: Int!
+
+  """Total amount of pages in list"""
+  totalPages: Int!
+}
+
+type TOperationMetaAttributes {
+  """Operation delta timestamp"""
+  deltaTimestamp: Float!
+
+  """Operation finish timestamp"""
+  finishTimestamp: Float!
+
+  """Operation start timestamp"""
+  startTimestamp: Float!
+}
+
+input TRefreshInput {
+  """Refresh token"""
+  token: String!
+}
+
+input TSignInInput {
+  """Email of user"""
+  email: String!
+
+  """Password of user"""
+  password: String!
+}
+
+input TSignUpInput {
+  """Email of user"""
+  email: String!
+
+  """Password of user"""
+  password: String!
+}
+
+input TSortInput {
+  """Name of column"""
+  columnName: String
+
+  """Sort direction"""
+  direction: ESortDirection
+}
+
+type TTokenDataAttributes {
+  """Access JWT token"""
+  accessToken: String!
+
+  """Timestamp, when access token will expire in UTC"""
+  accessTokenTTL: String!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+
+  """Refresh JWT token"""
+  refreshToken: String!
+
+  """Timestamp, when refresh token will expire in UTC"""
+  refreshTokenTTL: String!
+}
+
+type TUserAttributes {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Email of user"""
+  email: String!
+
+  """External roles of user"""
+  externalRoles: [TExternalRoleAttributes!]!
+
+  """External services of user"""
+  externalServices: [TExternalServiceAttributes!]!
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+
+  """Role of user"""
+  role: ERole!
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+
+  """Defines are user verified"""
+  verified: Boolean!
+}
+
+type TUserAttributesOmitOperationMeta {
+  """Entity creation datetime"""
+  createdAt: DateTime!
+
+  """Email of user"""
+  email: String!
+
+  """External roles of user"""
+  externalRoles: [TExternalRoleAttributes!]!
+
+  """External services of user"""
+  externalServices: [TExternalServiceAttributes!]!
+
+  """Entity id in UUID format"""
+  id: UUID!
+
+  """Role of user"""
+  role: ERole!
+
+  """Entity last update datetime"""
+  updatedAt: DateTime!
+
+  """Defines are user verified"""
+  verified: Boolean!
+}
+
+input TUserCreateInput {
+  """Email of user"""
+  email: String!
+
+  """Defines user external roles in connected external services"""
+  externalRolesId: [UUID!]
+
+  """Defines user connected external services"""
+  externalServicesId: [String!]
+
+  """Password of user"""
+  password: String!
+
+  """Role of user"""
+  role: ERole!
+
+  """Defines are user verified"""
+  verified: Boolean!
+}
+
+type TUserListAttributes {
+  data: [TUserAttributesOmitOperationMeta!]!
+  meta: TListMetaAttributes!
+
+  """Status metadata"""
+  operationMeta: TOperationMetaAttributes!
+}
+
+input TUserListInput {
+  """Datetime period criteria"""
+  createDatePeriod: TDatePeriodInput
+
+  """
+  Filter by external role id. Multiple criteria allowed with OR functionality
+  """
+  externalRoleFilter: [String!]
+
+  """
+  Filter by external service id. Multiple criteria allowed with OR functionality
+  """
+  externalServiceFilter: [String!]
+
+  """Filter by entity id. Multiple criteria allowed with OR functionality"""
+  id: [UUID!]
+
+  """Page of list"""
+  page: Int = 0
+
+  """Amount of elements per page"""
+  perPage: Int = 8
+
+  """Filter by user internal role"""
+  roleFilter: ERole
+
+  """SimpleFilter"""
+  simpleFilter: String
+
+  """Sorting criteria"""
+  sort: [TSortInput!] = []
+
+  """Datetime period criteria"""
+  updateDatePeriod: TDatePeriodInput
+}
+
+type TUserMutations {
+  """Provides functionality of creating users evading sign-up system."""
+  create(input: TUserCreateInput!): TUserAttributes!
+
+  """Provides functionality of deleting user by id."""
+  delete(input: TIdInput!): String!
+
+  """Provides functionality of deleting yourself"""
+  deleteMe: String!
+
+  """Provides functionality of editing user by id."""
+  update(input: TUserUpdateInput!): TUserAttributes!
+
+  """Provides functionality of updating yourself"""
+  updateMe(input: TUserUpdateMeInput!): TUserAttributes!
+}
+
+type TUserQueries {
+  """Provides functionality of getting list of users."""
+  list(input: TUserListInput): TUserListAttributes!
+
+  """Provides functionality of getting information about user by id."""
+  record(idInput: TIdInput!): TUserAttributes!
+
+  """Provides user information."""
+  recordMe: TUserAttributes!
+}
+
+input TUserUpdateInput {
+  """Identification property with uuid signature"""
+  id: UUID!
+  payload: TUserUpdatePayloadInput!
+}
+
+input TUserUpdateMeInput {
+  """Email of user"""
+  email: String
+
+  """Password of user"""
+  password: String
+}
+
+input TUserUpdatePayloadInput {
+  """Email of user"""
+  email: String
+
+  """Defines user external roles in connected external services"""
+  externalRolesId: [UUID!]
+
+  """Defines user connected external services"""
+  externalServicesId: [UUID!]
+
+  """Password of user"""
+  password: String
+
+  """Role of user"""
+  role: ERole
+
+  """Defines are user verified"""
+  verified: Boolean
+}
+
+"""UUID Validator"""
+scalar UUID

@@ -1,0 +1,10 @@
+query ExternalRoleFormGetExternalServiceListForAutocomplete {
+    externalService {
+        list (input: {perPage: 1000}) {
+            data {
+                id
+                name
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+query AuthPageSignIn($input: TSignInInput!) {
+    auth {
+        signIn(input: $input) {
+            accessToken
+            accessTokenTTL
+            refreshToken
+            refreshTokenTTL
+        }
+    }
+}

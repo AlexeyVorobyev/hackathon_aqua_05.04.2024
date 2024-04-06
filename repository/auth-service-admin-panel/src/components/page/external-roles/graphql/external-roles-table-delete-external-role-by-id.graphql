@@ -1,0 +1,5 @@
+mutation ExternalRolesTableDeleteExternalRoleById ($input: TIdInput!) {
+    externalRole {
+        delete(input: $input)
+    }
+}

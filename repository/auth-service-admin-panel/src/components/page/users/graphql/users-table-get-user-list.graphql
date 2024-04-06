@@ -1,0 +1,29 @@
+query UsersTableGetUserList ($input: TUserListInput) {
+    user {
+        list (input: $input) {
+            data {
+                id
+                email
+                role
+                createdAt
+                updatedAt
+                verified
+                externalRoles {
+                    name
+                    externalService {
+                        name
+                    }
+                }
+                externalServices {
+                    name
+                }
+            }
+            meta {
+                currentPage
+                elementsPerPage
+                totalElements
+                totalPages
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+mutation UsersTableDeleteUserById ($input: TIdInput!) {
+    user {
+        delete(input: $input)
+    }
+}

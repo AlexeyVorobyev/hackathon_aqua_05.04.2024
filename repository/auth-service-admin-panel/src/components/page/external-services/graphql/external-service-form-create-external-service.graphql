@@ -1,0 +1,7 @@
+mutation ExternalServiceFormCreateExternalService ($input: TExternalServiceCreateInput!) {
+    externalService {
+        create(input: $input) {
+            id
+        }
+    }
+}

@@ -1,0 +1,10 @@
+mutation RegistrationPageExternalServiceSignUp($input: TExternalServiceSignUpInput!) {
+    auth {
+        externalServiceSignUp(input: $input) {
+            accessToken
+            accessTokenTTL
+            refreshToken
+            refreshTokenTTL
+        }
+    }
+}

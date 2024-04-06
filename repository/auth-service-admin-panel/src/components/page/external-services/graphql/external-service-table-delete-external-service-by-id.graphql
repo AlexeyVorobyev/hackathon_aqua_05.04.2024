@@ -1,0 +1,5 @@
+mutation ExternalServicesTableDeleteExternalServiceById ($input: TIdInput!) {
+    externalService {
+        delete(input: $input)
+    }
+}

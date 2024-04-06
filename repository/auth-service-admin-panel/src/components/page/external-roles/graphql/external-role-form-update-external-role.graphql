@@ -1,0 +1,7 @@
+mutation ExternalRoleFormUpdateExternalRole ($input: TExternalRoleUpdateInput!) {
+    externalRole {
+        update(input: $input) {
+            id
+        }
+    }
+}

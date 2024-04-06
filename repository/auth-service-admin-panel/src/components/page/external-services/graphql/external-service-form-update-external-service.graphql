@@ -1,0 +1,7 @@
+mutation ExternalServiceFormUpdateExternalService ($input: TExternalServiceUpdateInput!) {
+    externalService {
+        update(input: $input) {
+            id
+        }
+    }
+}

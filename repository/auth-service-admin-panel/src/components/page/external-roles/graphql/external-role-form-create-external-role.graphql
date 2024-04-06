@@ -1,0 +1,7 @@
+mutation ExternalRoleFormCreateExternalRole ($input: TExternalRoleCreateInput!) {
+    externalRole {
+        create(input: $input) {
+            id
+        }
+    }
+}

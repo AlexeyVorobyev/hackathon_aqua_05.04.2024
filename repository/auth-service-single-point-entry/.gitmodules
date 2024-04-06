@@ -1,0 +1,3 @@
+[submodule "src/shared-react-components"]
+	path = src/shared-react-components
+	url = git@github.com:AlexeyVorobyev/shared-react-components.git

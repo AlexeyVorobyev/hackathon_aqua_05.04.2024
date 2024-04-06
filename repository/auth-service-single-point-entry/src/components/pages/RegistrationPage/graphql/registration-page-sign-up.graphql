@@ -1,0 +1,10 @@
+mutation RegistrationPageSignUp($input: TSignUpInput!) {
+    auth {
+        baseSignUp(input: $input) {
+            accessToken
+            accessTokenTTL
+            refreshToken
+            refreshTokenTTL
+        }
+    }
+}

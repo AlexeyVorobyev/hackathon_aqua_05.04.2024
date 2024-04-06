@@ -1,0 +1,10 @@
+query ApolloGetAuthRefresh ($input: TRefreshInput!) {
+    auth {
+        refresh (input: $input) {
+            accessTokenTTL
+            accessToken
+            refreshTokenTTL
+            refreshToken
+        }
+    }
+}

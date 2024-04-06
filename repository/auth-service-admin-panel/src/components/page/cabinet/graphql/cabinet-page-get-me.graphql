@@ -1,0 +1,23 @@
+query CabinetPageGetMe {
+    user {
+        recordMe {
+            id
+            email
+            role
+            createdAt
+            updatedAt
+            externalRoles {
+                id
+                name
+                externalService {
+                    id
+                    name
+                }
+            }
+            externalServices {
+                id
+                name
+            }
+        }
+    }
+}

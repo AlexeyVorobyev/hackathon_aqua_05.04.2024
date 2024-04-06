@@ -1,0 +1,28 @@
+query UserCardGetUserRecord ($input: TIdInput!) {
+    user {
+        record(idInput: $input) {
+            id
+            email
+            role
+            createdAt
+            updatedAt
+            verified
+            externalRoles {
+                id
+                name
+                externalService {
+                    id
+                    name
+                }
+            }
+            externalServices {
+                id
+                name
+                externalRoles {
+                    id
+                    name
+                }
+            }
+        }
+    }
+}
