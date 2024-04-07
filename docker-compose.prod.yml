@@ -75,6 +75,7 @@ services:
     hostname: frontend-hackathon-aqua-05-04-2024
     build:
       context: repository/frontend-hackathon-aqua-05-04-2024
+      no_cache: true
     ports:
       - ${FRONTEND_EXTERNAL_PORT}:3000
     depends_on:
